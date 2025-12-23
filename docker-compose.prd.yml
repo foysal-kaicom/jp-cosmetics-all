@@ -1,4 +1,3 @@
-
 services:
   nginx-proxy:
     image: nginx:stable-alpine
@@ -9,7 +8,6 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./jp-cosmetics-backend:/var/www/backend:ro
     depends_on:
-      - frontend
       - backend
     restart: always
     networks:
