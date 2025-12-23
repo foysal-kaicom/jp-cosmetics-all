@@ -4,23 +4,49 @@ WORKDIR /var/www
 COPY package*.json ./
 RUN npm ci
 
-# ---------- Stage 2: Build ----------
+# ---------- Stage 2: Builder ----------
 FROM node:20-alpine AS builder
 WORKDIR /var/www
+
+# Copy node_modules from deps
 COPY --from=deps /var/www/node_modules ./node_modules
+
+# Copy source code
 COPY . .
 
+# Disable telemetry and set production env
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN npm run build
+# Temporary mock API port
+ENV NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+
+# Install tiny JSON mock server globally
+RUN npm install -g json-server
+
+# Create a mock response file (adjust fields to match your API)
+RUN mkdir -p /var/www/mock && \
+    echo '{"business-info":{"name":"Mock Business"}}' > /var/www/mock/db.json
+
+# Start mock API in background and build
+RUN json-server --watch /var/www/mock/db.json --port 4000 & \
+    npm run build
 
 # ---------- Stage 3: Runner ----------
-FROM node:20-alpine
+FROM node:20-alpine AS runner
 WORKDIR /var/www
+
+# Copy build output
 COPY --from=builder /var/www/.next ./.next
 COPY --from=builder /var/www/public ./public
 COPY --from=builder /var/www/package.json ./
 
+# Install only production dependencies
+RUN npm ci --omit=dev
+
+# Expose port and healthcheck
 EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s CMD wget -qO- http://localhost:3000/ || exit 1
+
+# Start Next.js SSR
 CMD ["npm", "start"]
