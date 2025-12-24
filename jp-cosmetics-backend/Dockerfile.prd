@@ -1,48 +1,28 @@
-# Base image
-FROM php:8.3-fpm AS backend
+FROM php:8.2-fpm-alpine
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# System deps
+RUN apk add --no-cache \
+    bash \
     git \
-    curl \
     unzip \
-    zip \
     libzip-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libonig-dev \
-    libxml2-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libjpeg-dev \
-    libpng-dev \
-    ghostscript \
-    && docker-php-ext-configure zip \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    oniguruma-dev \
+    icu-dev
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# PHP extensions
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    intl \
+    zip
 
-# Copy composer files first for caching
-COPY composer.json composer.lock ./
+# IMPORTANT: allow TCP for Docker
+RUN sed -i 's|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|' \
+    /usr/local/etc/php-fpm.d/www.conf \
+ && echo "listen.allowed_clients = 0.0.0.0" >> \
+    /usr/local/etc/php-fpm.d/www.conf
 
-# Install PHP dependencies (production only)
-# RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+WORKDIR /var/www/backend
 
-# Copy application files
-COPY . .
-
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
-
-    # ---------- Override PHP-FPM listen ----------
-RUN sed -i 's/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/' /usr/local/etc/php-fpm.d/www.conf \
- && echo 'listen.allowed_clients = 0.0.0.0' >> /usr/local/etc/php-fpm.d/www.conf
-
-
-EXPOSE 9000
 CMD ["php-fpm"]
