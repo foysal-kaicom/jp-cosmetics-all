@@ -19,7 +19,7 @@ const HomeCategory = ({ popularCategories }: { popularCategories: Category[] }) 
       spacing: 16,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      setCurrentSlide(slider.track?.details?.rel ?? 0);
     },
     created() {
       setLoaded(true);
@@ -66,8 +66,11 @@ const HomeCategory = ({ popularCategories }: { popularCategories: Category[] }) 
                 e.stopPropagation() || instanceRef.current?.next()
               }
               disabled={
-                currentSlide ===
-                instanceRef.current.track.details.slides.length - 5 // Adjust subtraction based on default perView
+                currentSlide >=
+                Math.max(
+                  0,
+                  (instanceRef.current?.track?.details?.slides?.length ?? 0) - 1
+                )
               }
             />
           </>

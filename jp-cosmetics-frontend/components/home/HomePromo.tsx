@@ -20,7 +20,7 @@ const HomePromo = ({ footerSliders }: { footerSliders: FooterSlider[] }) => {
       spacing: 16,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      setCurrentSlide(slider.track?.details?.rel ?? 0);
     },
     created() {
       setLoaded(true);
@@ -67,7 +67,9 @@ const HomePromo = ({ footerSliders }: { footerSliders: FooterSlider[] }) => {
         {loaded && instanceRef.current && (
           <div className="flex justify-center absolute bottom-4 w-full gap-2 z-10">
             {[
-              ...Array(instanceRef.current.track.details.slides.length).keys(),
+              ...Array(
+                instanceRef.current?.track?.details?.slides?.length ?? 0
+              ).keys(),
             ].map((idx) => {
               return (
                 <button

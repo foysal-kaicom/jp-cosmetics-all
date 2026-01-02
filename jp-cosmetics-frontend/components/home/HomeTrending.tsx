@@ -114,7 +114,7 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
       spacing: 16,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      setCurrentSlide(slider.track?.details?.rel ?? 0);
     },
     created() {
       setLoaded(true);
@@ -171,8 +171,12 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
                 e.stopPropagation() || instanceRef.current?.next()
               }
               disabled={
-                currentSlide ===
-                instanceRef.current.track.details.slides.length - 5 // Adjust based on max perView
+                // compute slideCount safely
+                currentSlide >=
+                Math.max(
+                  0,
+                  (instanceRef.current?.track?.details?.slides?.length ?? 0) - 1
+                )
               }
             />
           </>
@@ -198,7 +202,9 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
       {loaded && instanceRef.current && (
         <div className="flex justify-center py-4 gap-2">
           {[
-            ...Array(instanceRef.current.track.details.slides.length).keys(),
+            ...Array(
+              instanceRef.current?.track?.details?.slides?.length ?? 0
+            ).keys(),
           ].map((idx) => {
             return (
               <button

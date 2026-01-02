@@ -20,7 +20,7 @@ const HomeReview = () => {
       spacing: 16,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      setCurrentSlide(slider.track?.details?.rel ?? 0);
     },
     created() {
       setLoaded(true);
@@ -93,7 +93,9 @@ const HomeReview = () => {
       {loaded && instanceRef.current && (
         <div className="flex justify-center pb-4 gap-2">
           {[
-            ...Array(instanceRef.current.track.details.slides.length).keys(),
+            ...Array(
+              instanceRef.current?.track?.details?.slides?.length ?? 0
+            ).keys(),
           ].map((idx) => {
             return (
               <button
