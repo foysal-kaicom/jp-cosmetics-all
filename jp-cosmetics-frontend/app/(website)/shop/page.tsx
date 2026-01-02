@@ -1,5 +1,9 @@
 "use client";
 
+// Prevent Next.js from attempting static prerendering for this page
+// which uses client-only hooks like useSearchParams.
+export const dynamic = "force-dynamic";
+
 import ProductListComponent from "@/components/shop/ProductListComponent";
 import apiClient from "@/lib/axios";
 import { ProductFilters, ProductList } from "@/types";
