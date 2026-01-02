@@ -15,13 +15,16 @@ services:
     restart: always
 
   frontend:
-    build: ./jp-cosmetics-frontend
+    build:
+      context: ./jp-cosmetics-frontend
+      args:
+        - NEXT_PUBLIC_SKIP_FETCH_ON_BUILD=1
     container_name: frontend
     expose:
       - "3000"
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_BASE_URL: /api
+      NEXT_PUBLIC_API_BASE_URL: /api/v1
     networks:
       - app-network
     restart: always
