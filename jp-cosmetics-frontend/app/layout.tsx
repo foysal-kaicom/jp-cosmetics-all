@@ -11,6 +11,9 @@ import { ToastContainer } from "react-toastify";
 //   description:
 //     "Discover elegance and self-care with Cosmetica's exclusive collection of premium beauty products and cosmetics.",
 // };
+
+export const dynamic = "force-dynamic";
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.jpcosmetica.biz";
 
