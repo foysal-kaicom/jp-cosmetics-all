@@ -38,6 +38,11 @@ const nextConfig: NextConfig = {
         hostname: "192.168.0.101",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "admin.kaicombd.com",
+        pathname: "/**",
+      },
     ],
   },
 };
