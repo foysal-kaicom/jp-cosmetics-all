@@ -17,7 +17,7 @@
                 <p class="text-muted bg-green-300">Recomendation Image Size: 645*335 px</p>
                 <div class="position-relative border rounded bg-light d-flex align-items-center justify-content-center h-75">
                     <img id="imagePreview"
-                         src="{{ $brand->logo ? (\Illuminate\Support\Str::startsWith($brand->logo,'http') ? $brand->logo : asset($brand->logo)) : asset('imagePH.png') }}"
+                         src="{{ $brand->logo }}"
                          alt="Logo Preview"
                          class="w-100 h-100 object-fit-cover rounded"/>
                     <button type="button" id="removeImage" class="btn btn-sm btn-light bg-white border position-absolute top-0 end-0 rounded-circle">×</button>

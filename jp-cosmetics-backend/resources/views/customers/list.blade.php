@@ -87,7 +87,7 @@
                     <tr>
                         <td>{{ $customer->id }}</td>
                         <td class="d-none d-sm-table-cell">
-                            <img class="customer-thumb" src="{{ $customer->image ? (Str::startsWith($customer->image, 'http') ? $customer->image : asset($customer->image)) : asset('imagePH.png') }}" alt="Customer">
+                            <img class="customer-thumb" src="{{ $customer->image}}" alt="Customer">
                         </td>
                         <td class="d-none d-md-table-cell">{{ $customer->name }}</td>
                         <td class="d-none d-md-table-cell">{{ $customer->email }}</td>

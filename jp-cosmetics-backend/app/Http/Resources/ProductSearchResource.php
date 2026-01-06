@@ -14,7 +14,7 @@ class ProductSearchResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'slug'          => $this->slug,
-            'image'         => asset($this->primary_image),
+            'image'         => $this->primary_image,
             'default_attribute' => $defaultAttr
             ? array_merge($defaultAttr->toArray(), [
                 'discounted_price'        => $defaultAttr->getDiscountedPrice(),

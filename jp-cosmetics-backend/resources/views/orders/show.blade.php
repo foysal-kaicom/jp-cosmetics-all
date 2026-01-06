@@ -188,9 +188,7 @@
                             @php
                                 $product  = $details->product ?? null;
                                 $product_attribute = $details->productAttribute ?? $details->product_attribute ?? null;
-                                $img = $product?->primary_image
-                                    ? (\Illuminate\Support\Str::startsWith($product->primary_image, 'http') ? $product->primary_image : asset($product->primary_image))
-                                    : asset('imagePH.png');
+                                $img = $product?->primary_image;
                             @endphp
                             <tr>
                                 <td>

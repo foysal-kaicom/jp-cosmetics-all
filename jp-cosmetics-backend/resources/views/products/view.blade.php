@@ -31,7 +31,7 @@
         <!-- Top Section -->
         <div class="row g-4 align-items-start">
             <div class="col-md-4 text-center">
-                <img src="{{ asset($product->primary_image ?? 'imagePH.png') }}" class="product-img border" alt="Product Image">
+                <img src="{{ $product->primary_image }}" class="product-img border" alt="Product Image">
             </div>
 
             <div class="col-md-8">

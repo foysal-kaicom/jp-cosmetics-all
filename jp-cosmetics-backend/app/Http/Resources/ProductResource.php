@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'long_description'  => $this->long_description,
             'ingredients'       => $this->ingredients,
             'how_to_use'        => $this->how_to_use,
-            'primary_image'     => asset($this->primary_image),
+            'primary_image'     => $this->primary_image,
 
             'category' => [
                 'id'   => $this->category->id,

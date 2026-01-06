@@ -86,7 +86,7 @@ document.getElementById("fileInput").addEventListener("change", function(event) 
     reader.readAsDataURL(file);
 });
 document.getElementById("removeImage").addEventListener("click", function() {
-    document.getElementById("imagePreview").src = "{{ $footerSlider->image ? asset('storage/'.$footerSlider->image) : asset('imagePH.png') }}";
+    document.getElementById("imagePreview").src = "{{ $footerSlider->image }}";
     document.getElementById("fileInput").value = "";
 });
 </script>

@@ -8,7 +8,7 @@
         <div class="relative bg-gradient-to-r from-indigo-500 to-purple-600 h-40">
             <div class="absolute -bottom-12 left-8 flex items-center">
                 <img 
-                    src="{{ $superAdmin->image ?? asset('assets/imagePH.png') }}" 
+                    src="{{ $superAdmin->image}}" 
                     alt="Profile Picture" 
                     class="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover"
                 >

@@ -111,7 +111,7 @@
                     <tr>
                         <td>{{ $prod->id }}</td>
                         <td class="d-none d-sm-table-cell">
-                            <img class="prod-thumb" src="{{ $prod->primary_image ? (Str::startsWith($prod->primary_image, 'http') ? $prod->primary_image : asset($prod->primary_image)) : asset('imagePH.png') }}" alt="Product">
+                            <img class="prod-thumb" src="{{ $prod->primary_image }}" alt="Product">
                         </td>
                         <td>
                             <div class="fw-semibold">{{ $prod->name }}</div>
