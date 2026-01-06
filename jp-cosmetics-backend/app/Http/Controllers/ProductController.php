@@ -28,18 +28,18 @@ class ProductController extends Controller
     public function list(Request $request)
     {
         $query = Product::with(['attributes', 'category', 'brand']);
-    
+
         if ($search = $request->get('search')) {
             $query->where('name', 'like', "%{$search}%")
-                  ->orWhereHas('category', fn($q) => $q->where('name', 'like', "%{$search}%"))
-                  ->orWhereHas('brand', fn($q) => $q->where('name', 'like', "%{$search}%"));
+                ->orWhereHas('category', fn($q) => $q->where('name', 'like', "%{$search}%"))
+                ->orWhereHas('brand', fn($q) => $q->where('name', 'like', "%{$search}%"));
         }
-    
+
         $products = $query->latest()->paginate(10);
-    
+
         return view('products.list', compact('products'));
     }
-    
+
     public function view($id)
     {
         $product = Product::with(['category', 'brand', 'attributes.attribute_images'])->findOrFail($id);
@@ -84,8 +84,8 @@ class ProductController extends Controller
                 'ingredients'       => $data['ingredients'],
                 'how_to_use'        => $data['how_to_use'],
             ]);
-            
-            if(isset($data['attributes']) && count($data['attributes']) > 0){
+
+            if (isset($data['attributes']) && count($data['attributes']) > 0) {
                 $defaultIndex = null;
 
                 foreach ($data['attributes'] as $i => $attr) {
@@ -97,7 +97,7 @@ class ProductController extends Controller
                     if ($isEmpty) continue;
 
                     $isDefault = ($defaultIndex === $i) ? 1 : 0;
-        
+
                     $product_attribute = ProductAttribute::create([
                         'product_id'      => $product->id,
                         'attribute_name'  => $attr['attribute_name'] ?? '',
@@ -109,23 +109,22 @@ class ProductController extends Controller
                         'discount_type'   => $attr['discount_type'] ?? null,
                         'discount_amount' => $attr['discount_amount'] ?? null,
                         'status'          => isset($attr['status']) ? (int)$attr['status'] : 1,
-                        'is_default'      => $isDefault 
+                        'is_default'      => $isDefault
                     ]);
-    
+
                     $filesForThisAttr = $attr['attribute_images'] ?? [];
-        
+
                     if (is_array($filesForThisAttr) && count($filesForThisAttr)) {
-                        $imgDest = public_path('product_attribute_images');
-                        if (!is_dir($imgDest)) { @mkdir($imgDest, 0755, true); }
-        
+
                         foreach ($filesForThisAttr as $imgFile) {
                             if (!$imgFile) continue;
-                            $fname = time() . '_' . $imgFile->getClientOriginalName();
-                            $imgFile->move($imgDest, $fname);
-    
+
+                            $uploadResp = $this->fileStorageService->uploadImageToCloud($imgFile, 'product-attribute');
+                            $publicPath = $uploadResp['public_path'] ?? null;
+
                             ProductAttributeImage::create([
                                 'attribute_id' => $product_attribute->id,
-                                'image_path'   => 'product_attribute_images/' . $fname,
+                                'image_path'   => $publicPath
                             ]);
                         }
                     }
@@ -133,7 +132,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-    
+
             Toastr::success('Product created successfully.');
             return redirect()->route('product.list');
         } catch (\Exception $e) {
@@ -196,14 +195,14 @@ class ProductController extends Controller
                 ProductAttribute::whereIn('id', $removedAttributes)->delete();
             }
 
-            if(isset($data['attributes']) && count($data['attributes']) > 0){
+            if (isset($data['attributes']) && count($data['attributes']) > 0) {
                 $defaultIndex = null;
                 foreach ($data['attributes'] as $i => $attr) {
                     if (!empty($attr['is_default'])) {
                         $defaultIndex = $i;
                     }
                     if (empty($attr['attribute_name']) && empty($attr['attribute_value'])) continue;
-    
+
                     $attributeId = $attr['id'] ?? null;
                     $isDefault = ($defaultIndex === $i) ? 1 : 0;
                     if ($attributeId) {
@@ -237,23 +236,21 @@ class ProductController extends Controller
                             'is_default' => !empty($attr['is_default']) ? 1 : 0,
                         ]);
                     }
-    
+
                     if (isset($attr['attribute_images'])) {
                         $filesForThisAttr = $attr['attribute_images'];
                         if (count($filesForThisAttr) > 0) {
-                            $imgDest = public_path('product_attribute_images');
-                            if (!is_dir($imgDest)) { @mkdir($imgDest, 0755, true); }
-    
+
                             ProductAttributeImage::where('attribute_id', $product_attribute->id)->delete();
-    
+
                             foreach ($filesForThisAttr as $imgFile) {
                                 if (!$imgFile) continue;
-                                $fname = time() . '_' . $imgFile->getClientOriginalName();
-                                $imgFile->move($imgDest, $fname);
-    
+                                $uploadResp = $this->fileStorageService->updateFileFromCloud($imgFile, 'product-attribute');
+                                $publicPath = $uploadResp['public_path'] ?? null;
+
                                 ProductAttributeImage::create([
                                     'attribute_id' => $product_attribute->id,
-                                    'image_path' => 'product_attribute_images/' . $fname,
+                                    'image_path' => $publicPath,
                                 ]);
                             }
                         }
@@ -277,7 +274,7 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-    
+
             if ($product->status) {
                 $product->status = false;
                 $product->save();
@@ -302,6 +299,4 @@ class ProductController extends Controller
 
         return view('products.product_requests_index', compact('requests'));
     }
-
-
 }
