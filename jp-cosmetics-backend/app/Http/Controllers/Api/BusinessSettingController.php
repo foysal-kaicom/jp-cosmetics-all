@@ -36,11 +36,11 @@ class BusinessSettingController extends Controller
 
                 if ($businessSetting) {
                     // Convert image paths to full URLs
-                    $businessSetting->header_logo = $businessSetting->header_logo ? asset($businessSetting->header_logo) : null;
-                    $businessSetting->footer_logo = $businessSetting->footer_logo ? asset($businessSetting->footer_logo) : null;
-                    $businessSetting->favicon_icon = $businessSetting->favicon_icon ? asset($businessSetting->favicon_icon) : null;
-                    $businessSetting->header_advertisement = $businessSetting->header_advertisement ? asset($businessSetting->header_advertisement) : null;
-                    $businessSetting->footer_advertisement = $businessSetting->footer_advertisement ? asset($businessSetting->footer_advertisement) : null;
+                    $businessSetting->header_logo = $businessSetting->header_logo;
+                    $businessSetting->footer_logo = $businessSetting->footer_logo ;
+                    $businessSetting->favicon_icon = $businessSetting->favicon_icon ;
+                    $businessSetting->header_advertisement = $businessSetting->header_advertisement;
+                    $businessSetting->footer_advertisement = $businessSetting->footer_advertisement;
                 }
 
                 return $businessSetting;

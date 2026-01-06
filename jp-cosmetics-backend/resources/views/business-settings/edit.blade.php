@@ -92,7 +92,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="position-relative border rounded bg-light  d-flex h-[160px] w-[200px] mx-auto">
-                                    <img id="imagePreview" src="{{ $bsData->header_logo ? asset($bsData->header_logo) : asset('imagePH.png') }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
+                                    <img id="imagePreview" src="{{ $bsData->header_logo }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
                                 </div>
                                 <input type="file" accept="image/*" id="fileInput" name="header_logo" class="d-none" />
                                 <label for="fileInput" class="position-relative btn btn-dark mt-2 w-[200px]">Choose Header Logo</label>
@@ -104,7 +104,7 @@
                                 <!-- Footer Logo Upload -->
                                 <div class="text-center">
                                     <div class="position-relative border rounded bg-light  d-flex h-[160px] w-[200px] mx-auto">
-                                        <img id="imagePreviewFooter" src="{{ $bsData->footer_logo ? asset($bsData->footer_logo) : asset('imagePH.png') }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
+                                        <img id="imagePreviewFooter" src="{{ $bsData->footer_logo }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
                                     </div>
                                     <input type="file" accept="image/*" id="fileInputFooter" name="footer_logo" class="d-none" />
                                     <label for="fileInputFooter" class="position-relative btn btn-dark mt-2 w-[200px]">Choose Footer Logo</label>
@@ -117,7 +117,7 @@
                                 <!-- Image Upload -->
                                 <div class="text-center">
                                     <div class="position-relative border rounded bg-light d-flex h-[160px] w-[200px] mx-auto">
-                                        <img id="imagePreviewicon" src="{{ $bsData->favicon_icon ? asset($bsData->favicon_icon) : asset('imagePH.png') }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
+                                        <img id="imagePreviewicon" src="{{ $bsData->favicon_icon }}" alt="Display Image" class="w-100 h-100 object-fit-cover rounded"/>
                                     </div>
                                     <input type="file" accept="image/*" id="fileInputicon" name="favicon_icon" class="d-none" />
                                     <label for="fileInputicon" class="position-relative btn btn-dark mt-2 w-[180px]">Choose Favicon</label>
@@ -297,7 +297,7 @@
                             <div class="col-md-6">
                                 <p class="text-muted bg-green-300">Recomendation Image Size: 1085*700 px</p>
                                 <div class="position-relative border rounded bg-light  d-flex mx-auto">
-                                    <img id="imagePreviewHeaderAds" src="{{ $bsData->header_advertisement ? asset($bsData->header_advertisement) : asset('imagePH.png') }}" alt="Display Image" class=" rounded"/>
+                                    <img id="imagePreviewHeaderAds" src="{{ $bsData->header_advertisement }}" alt="Display Image" class=" rounded"/>
                                 </div>
                                 <input type="file" accept="image/*" id="fileInputHeaderAds" name="header_advertisement" class="d-none" />
                                 <label for="fileInputHeaderAds" class="position-relative btn btn-dark mt-2 ">Choose Header Advertisement Image</label>
@@ -310,7 +310,7 @@
                                 <div class="text-center">
                                     <p class="text-muted bg-green-300">Recomendation Image Size: 1085*700 px</p>
                                     <div class="position-relative border rounded bg-light  d-flex  mx-auto">
-                                        <img id="imagePreviewFooterAds" src="{{ $bsData->footer_advertisement ? asset($bsData->footer_advertisement) : asset('imagePH.png') }}" alt="Display Image" class="rounded"/>
+                                        <img id="imagePreviewFooterAds" src="{{ $bsData->footer_advertisement  }}" alt="Display Image" class="rounded"/>
                                     </div>
                                     <input type="file" accept="image/*" id="fileInputFooterAds" name="footer_advertisement" class="d-none" />
                                     <label for="fileInputFooterAds" class="position-relative btn btn-dark mt-2 ">Choose Footer Advertisement Image</label>

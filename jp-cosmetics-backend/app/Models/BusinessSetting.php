@@ -9,6 +9,8 @@ class BusinessSetting extends Model
     protected $guarded=[];
 
     protected $casts = [
-        'legal_docs' => 'json',
+        'legal_docs' => 'array',
+        'inside_dhaka' => 'integer',
+        'outside_dhaka' => 'integer',
     ];
 }

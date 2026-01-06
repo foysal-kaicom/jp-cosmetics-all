@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BusinessSetting;
+use App\Services\FileStorageService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class BusinessSettingController extends Controller
 {
+
+    protected $fileStorageService;
+
+    public function __construct(FileStorageService $fileStorageService)
+    {
+        $this->fileStorageService = $fileStorageService;
+    }
     public function edit()
     {
         $bsData = BusinessSetting::first(); // Always 1 row
@@ -16,7 +25,7 @@ class BusinessSettingController extends Controller
 
     public function update(Request $request)
     {
-        $bsData = BusinessSetting::first();
+        $bsData = BusinessSetting::firstOrCreate([]); // Ensure a row exists
 
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
@@ -31,9 +40,10 @@ class BusinessSettingController extends Controller
             'bin_number' => 'nullable|string',
             'trade_license' => 'nullable|string',
 
-            'certification_docs' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'authorized_docs' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'legal_docs.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+            'certification_docs' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'authorized_docs' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'legal_docs' => 'nullable|array',
+            'legal_docs.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:10240',
 
             'header_logo' => 'nullable|image',
             'footer_logo' => 'nullable|image',
@@ -45,9 +55,9 @@ class BusinessSettingController extends Controller
             'header_advertisement' => 'nullable|image',
             'footer_advertisement' => 'nullable|image',
 
-            'privacy_policy' => 'nullable',
-            'terms_and_conditions' => 'nullable',
-            'return_policy' => 'nullable',
+            'privacy_policy' => 'nullable|string',
+            'terms_and_conditions' => 'nullable|string',
+            'return_policy' => 'nullable|string',
 
             'facebook_url' => 'nullable|string',
             'twitter_url' => 'nullable|string',
@@ -57,15 +67,21 @@ class BusinessSettingController extends Controller
         ]);
 
         // Image Upload Helper
-        $upload = function($field) use ($request, $bsData) {
+        $upload = function ($field) use ($request, $bsData) {
             if ($request->hasFile($field)) {
                 $file = $request->file($field);
-                $path = "uploads/business-settings/" . time() . "_" . $file->getClientOriginalName();
-                $file->move(public_path('uploads/business-settings'), $path);
-                return $path;
+                try {
+                    $logoUploadResponse = $this->fileStorageService->uploadImageToCloud($file, 'business-settings');
+                    return $logoUploadResponse['public_path'] ?? $bsData->$field ?? null;
+                } catch (\Throwable $e) {
+                    Log::error('BusinessSetting upload error for '.$field.': '.$e->getMessage());
+                    return $bsData->$field ?? null;
+                }
             }
-            return $bsData->$field;
+            return $bsData->$field ?? null;
         };
+
+
 
         // Upload images
         $validated['header_logo'] = $upload('header_logo');
@@ -83,11 +99,21 @@ class BusinessSettingController extends Controller
         if ($request->hasFile('legal_docs')) {
             $paths = [];
             foreach ($request->file('legal_docs') as $file) {
-                $path = "uploads/business-settings/legal_" . time() . "_" . $file->getClientOriginalName();
-                $file->move(public_path('uploads/business-settings'), $path);
-                $paths[] = $path;
+                try {
+                    $logoUploadResponse = $this->fileStorageService->uploadImageToCloud($file, 'business-settings');
+                    if (!empty($logoUploadResponse['public_path'])) {
+                        $paths[] = $logoUploadResponse['public_path'];
+                    }
+                } catch (\Throwable $e) {
+                    Log::warning('One of legal_docs failed to upload: '.$e->getMessage());
+                }
             }
-            $validated['legal_docs'] = $paths;
+            if (!empty($paths)) {
+                $validated['legal_docs'] = $paths;
+            } else {
+                // preserve existing value when uploads failed
+                $validated['legal_docs'] = $bsData->legal_docs ?? null;
+            }
         }
 
         // Set updated_by
@@ -95,7 +121,7 @@ class BusinessSettingController extends Controller
 
         // Update row
         $bsData->update($validated);
-        
+
         cache()->forget('business_settings');
 
         return redirect()->back()->with('success', 'Business settings updated successfully');
