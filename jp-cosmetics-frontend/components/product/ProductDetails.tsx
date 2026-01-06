@@ -26,8 +26,11 @@ import ProductCard from "@/components/home/ProductCard";
 import { SingleProduct } from "@/types";
 import Image from "next/image";
 import { useCartStore } from "@/store/cart-store";
+import { showToast } from "@/utils/toast";
 
 const ProductDetails = ({ product }: { product: SingleProduct }) => {
+  console.log(product);
+  
   const addItem = useCartStore((state) => state.addItem);
   const [selectedImage, setSelectedImage] = useState(0);
   const [main_image, setMainImage] = useState(product.primary_image);
@@ -59,6 +62,25 @@ const ProductDetails = ({ product }: { product: SingleProduct }) => {
         document.exitFullscreen();
       }
     }
+  };
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if(default_attribute.stock < quantity){
+      showToast.error("Requested quantity not available in stock.");
+      return;
+    }
+    addItem({
+      product_id: product.id,
+      product_name: product.name,
+      attribute_value: default_attribute.attribute_value ?? "",
+      product_attribute_id: default_attribute.id ?? null,
+      unit_price: default_attribute.discounted_price,
+      quantity: quantity,
+      discount_amount: default_attribute.attribute_discount_amount,
+      discount_percentage: default_attribute.discount_percentage,
+      image: product.primary_image,
+    });
+    showToast.success("Product added to cart successfully!");
   };
   return (
     <div className="bg-white min-h-screen">
@@ -276,21 +298,7 @@ const ProductDetails = ({ product }: { product: SingleProduct }) => {
                 </div>
 
                 <button
-                  onClick={() =>
-                    addItem({
-                      product_id: product.id,
-                      product_name: product.name,
-                      attribute_value: default_attribute.attribute_value ?? "",
-                      product_attribute_id: default_attribute.id ?? null,
-                      unit_price: parseFloat(default_attribute.unit_price),
-                      quantity: quantity,
-                      discount_amount:
-                        default_attribute.attribute_discount_amount,
-                      discount_percentage:
-                        default_attribute.discount_percentage,
-                      image: product.primary_image,
-                    })
-                  }
+                  onClick={handleAddToCart}
                   className="min-w-48 py-3 px-6 bg-linear-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer uppercase text-sm"
                 >
                   ADD TO CART
@@ -298,12 +306,12 @@ const ProductDetails = ({ product }: { product: SingleProduct }) => {
               </div>
 
               {/* Stock Status */}
-              {/* <div className="flex items-center gap-2 text-red-600 text-sm">
+              <div className="flex items-center gap-2 text-red-600 text-sm">
                 <Flame className="w-4 h-4" />
                 <span className="font-semibold">
-                  Only {product.stockCount} items left in stock
+                  Only {default_attribute.stock} items left in stock
                 </span>
-              </div> */}
+              </div>
 
               {/* Brief Description */}
               <div className="bg-gray-50 rounded-lg p-4 space-y-3">

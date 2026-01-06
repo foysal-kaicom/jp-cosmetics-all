@@ -85,8 +85,13 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
-    fetchAddress();
-  }, []);
+    if (user?.id) {
+      fetchAddress();
+    }
+    else{
+      router.push("/login?redirect=/checkout");
+    }
+  }, [user]);
 
   const handleOrder = async () => {
     if (!selectedAddress) {
@@ -173,7 +178,10 @@ export default function CheckoutPage() {
                 <h2 className="text-xl font-bold flex items-center gap-2">
                   <MapPin /> Delivery Address
                 </h2>
-                <Link href="/user/addresses" className="text-pink-600 flex items-center gap-1">
+                <Link
+                  href="/user/addresses"
+                  className="text-pink-600 flex items-center gap-1"
+                >
                   <Plus className="w-4 h-4" /> Add New
                 </Link>
               </div>
@@ -252,7 +260,9 @@ export default function CheckoutPage() {
                     className="w-20 h-20 rounded-xl object-cover"
                   />
                   <div className="flex-1">
-                    <p className="font-bold">{item.product_name} ({item.attribute_value})</p>
+                    <p className="font-bold">
+                      {item.product_name} ({item.attribute_value})
+                    </p>
                     <p className="text-sm text-gray-600">
                       Qty: {item.quantity}
                     </p>

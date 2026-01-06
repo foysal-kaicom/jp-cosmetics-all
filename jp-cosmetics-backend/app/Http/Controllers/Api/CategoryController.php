@@ -26,7 +26,7 @@ class CategoryController extends Controller
                 ->get();
 
             $categories->transform(function ($category) {
-                $category->image = $category->image ? asset($category->image) : null;
+                $category->image = $category->image;
                 return $category;
             });
 
@@ -54,7 +54,7 @@ class CategoryController extends Controller
                 return $this->responseWithError('Category not found', [], 404);
             }
 
-            $category->image = $category->image ? asset($category->image) : null;
+            $category->image = $category->image;
 
             return $this->responseWithSuccess($category, 'Category fetched successfully', 200);
 
@@ -75,7 +75,7 @@ class CategoryController extends Controller
                 ->get();
 
             $categories->transform(function ($category) {
-                $category->image = $category->image ? asset($category->image) : null;
+                $category->image = $category->image;
                 return $category;
             });
 

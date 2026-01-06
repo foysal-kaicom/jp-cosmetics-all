@@ -14,7 +14,7 @@ class CustomerResource extends JsonResource
             'name'       => $this->name,
             'email'      => $this->email,
             'phone'      => $this->phone,
-            'image'      => $this->image ? asset($this->image) : null,
+            'image'      => $this->image,
             'status'     => $this->status,
 
             'addresses' => CustomerAddressResource::collection($this->addresses),

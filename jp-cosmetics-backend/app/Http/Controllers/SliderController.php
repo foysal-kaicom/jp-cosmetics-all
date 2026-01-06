@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\FooterSlider;
 use App\Models\HeaderSlider;
+use App\Services\FileStorageService;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 
 class SliderController extends Controller
 {
+
+     protected $fileStorageService;
+
+    public function __construct(FileStorageService $fileStorageService)
+    {
+        $this->fileStorageService = $fileStorageService;
+    }
+
     // ----- Header Sliders -----
     public function headerIndex() {
         $sliders = HeaderSlider::all();
@@ -30,9 +39,9 @@ class SliderController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/header_sliders'), $imageName);
-            $data['image'] = 'header_sliders/' . $imageName;
+            $logoUploadResponse = $this->fileStorageService->uploadImageToCloud($request->file('image'), 'header_sliders');
+            
+            $data['image'] = $logoUploadResponse['public_path'];
         }
         $data['status'] = 1;
         HeaderSlider::create($data);
@@ -127,9 +136,8 @@ class SliderController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/footer_sliders'), $imageName);
-            $data['image'] = 'footer_sliders/' . $imageName;
+            $logoUploadResponse = $this->fileStorageService->uploadImageToCloud($request->file('image'), 'footer_sliders');
+            $data['image'] = $logoUploadResponse['public_path'];
         }
 
         $data['status'] = 1;
@@ -157,14 +165,15 @@ class SliderController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($footerSlider->image && file_exists(public_path('uploads/' . $footerSlider->image))) {
-                unlink(public_path('uploads/' . $footerSlider->image));
+            if ($footerSlider->image) {
+                $newFile = $request->file('image');
+                $fileToDelete = $footerSlider->image;
+                $logoUploadResponse = $this->fileStorageService->updateFileFromCloud($fileToDelete, $newFile);
+            } else {
+                $logo = $request->file('image');
+                $logoUploadResponse = $this->fileStorageService->uploadImageToCloud($logo, 'footer_sliders');
             }
-
-            // Save new image
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/footer_sliders'), $imageName);
-            $data['image'] = 'footer_sliders/' . $imageName;
+            $data['image'] = $logoUploadResponse['public_path'];
         }
 
         $footerSlider->update($data);

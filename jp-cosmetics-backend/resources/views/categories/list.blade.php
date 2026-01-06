@@ -88,7 +88,7 @@
                     <tr>
                         <td>{{ $cat->id }}</td>
                         <td class="d-none d-sm-table-cell">
-                            <img class="cat-thumb" src="{{ $cat->image ? (Str::startsWith($cat->image,'http') ? $cat->image : asset($cat->image)) : asset('imagePH.png') }}" alt="Category">
+                            <img class="cat-thumb" src="{{ $cat->image }}" alt="Category">
                         </td>
                         <td>
                             <div class="fw-semibold">{{ $cat->name }}</div>

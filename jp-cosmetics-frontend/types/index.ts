@@ -137,6 +137,7 @@ export interface SingleProduct {
     discount_percentage: number;
     discounted_price: number;
     formated_discount_price: string;
+    stock: number;
   }>;
   attribute_images: Array<{
     attribute_id: number;

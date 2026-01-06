@@ -15,7 +15,7 @@ class ProductDetailResource extends JsonResource
             $attr->attribute_images->each(function ($img) use (&$attributeImages, $attr) {
                 $attributeImages[] = [
                     'attribute_id' => $attr->id,
-                    'image'        => asset($img->image_path),
+                    'image'        => $img->image_path,
                 ];
             });
         });
@@ -24,7 +24,7 @@ class ProductDetailResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'slug'          => $this->slug,
-            'primary_image' => asset($this->primary_image),
+            'primary_image' => $this->primary_image,
             'product_type'  => $this->product_type,
             'status'            => $this->status,
             'short_description' => $this->short_description,

@@ -217,14 +217,12 @@
     })->values()->all();
 
     $datasetProducts = $products->map(function ($p) {
-        $img = $p->primary_image
-            ? (Str::startsWith($p->primary_image, 'http') ? $p->primary_image : asset($p->primary_image))
-            : asset('imagePH.png');
+           
 
         return [
             'id'   => $p->id,
             'name' => $p->name,
-            'img'  => $img,
+            'img'  => $p->primary_image,
             'attributes' => $p->attributes->map(function ($a) {
                 return [
                     'id'              => $a->id,

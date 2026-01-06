@@ -27,7 +27,7 @@ class SliderController extends Controller
                 ->orderBy('id', 'desc')
                 ->get()
                 ->map(function($slider){
-                    $slider->image = asset('uploads/' . $slider->image);
+                    $slider->image = $slider->image;
                     return $slider;
                 });
             });
@@ -58,7 +58,7 @@ class SliderController extends Controller
                 ->orderBy('id', 'desc')
                 ->get()
                 ->map(function($slider){
-                    $slider->image = asset('uploads/' . $slider->image);
+                    $slider->image =  $slider->image;
                     return $slider;
                 });
             });

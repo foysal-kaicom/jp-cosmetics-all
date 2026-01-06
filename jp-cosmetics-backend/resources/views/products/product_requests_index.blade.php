@@ -78,7 +78,7 @@
 
                         <td>
                             @if($request->image)
-                                <img src="{{ asset($request->image) }}"
+                                <img src="{{ $request->image }}"
                                      width="55"
                                      class="img-thumbnail">
                             @else

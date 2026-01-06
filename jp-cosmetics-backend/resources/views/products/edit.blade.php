@@ -25,7 +25,7 @@
             <div class="col-md-3 text-center">
                 <div class="position-relative border rounded bg-light d-flex align-items-center justify-content-center" style="min-height:240px;">
                     <img id="primaryImagePreview"
-                         src="{{ asset($product->primary_image ?? 'imagePH.png') }}"
+                         src="{{ $product->primary_image }}"
                          alt="Primary Image"
                          class="w-100 h-100 object-fit-cover rounded"/>
                     <button type="button"
@@ -254,7 +254,7 @@
                                 <input type="file" accept="image/*" multiple class="form-control attr-image-input" name="attributes[{{ $idx }}][attribute_images][]" />
                                 <div class="attr-images-preview mt-2">
                                     @foreach($attr['attribute_images'] ?? [] as $image)
-                                        <img src="{{ asset($image['image_path']) }}" class="img-thumbnail" width="50" height="50">
+                                        <img src="{{ $image['image_path'] }}" class="img-thumbnail" width="50" height="50">
                                     @endforeach
                                 </div>
                             </div>

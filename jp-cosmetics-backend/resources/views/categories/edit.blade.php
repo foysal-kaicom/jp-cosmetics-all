@@ -17,7 +17,7 @@
             <div class="col-md-3 text-center">
                 <div class="position-relative border rounded bg-light d-flex align-items-center justify-content-center h-75">
                     <img id="imagePreview"
-                         src="{{ $category->image ? (Str::startsWith($category->image,'http') ? $category->image : asset($category->image)) : asset('imagePH.png') }}"
+                         src="{{ $category->image }}"
                          alt="Category Image" class="w-100 h-100 object-fit-cover rounded" />
                     <button type="button" id="removeImage" class="btn btn-sm btn-light bg-white border position-absolute top-0 end-0 rounded-circle">×</button>
                 </div>

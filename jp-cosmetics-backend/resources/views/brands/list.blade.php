@@ -90,7 +90,7 @@
             <td>{{ $brand->id }}</td>
             <td class="d-none d-sm-table-cell">
               <img class="brand-thumb"
-                   src="{{ $brand->logo ?  asset($brand->logo) : asset('imagePH.png') }}"
+                   src="{{ $brand->logo }}"
                    alt="Brand Logo">
             </td>
             <td class="fw-semibold">{{ $brand->name }}</td>

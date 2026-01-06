@@ -16,13 +16,8 @@ class BrandController extends Controller
                 return Brand::select('id', 'name', 'slug', 'logo', 'description', 'status')
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->get()
-                    ->map(function ($brand) {
-                        if ($brand->logo) {
-                            $brand->logo = asset($brand->logo);
-                        }
-                        return $brand;
-                    });
+                    ->get();
+                    
             });
 
             return $this->responseWithSuccess($brands, 'Brands fetched successfully');
@@ -38,10 +33,6 @@ class BrandController extends Controller
             $brand = Brand::where('slug', $slug)
                 ->select('id', 'name', 'slug', 'logo', 'description', 'status')
                 ->firstOrFail();
-
-            if ($brand->logo) {
-                $brand->logo = asset($brand->logo);
-            }
 
             return $this->responseWithSuccess($brand, 'Brand fetched successfully');
 

@@ -15,7 +15,7 @@
             <div class="col-md-3 text-center">
                 <p class="text-muted bg-green-300">Recomendation Image Size: 1085*700 px <span class="text-danger">*</span></p>
                 <div class="position-relative border rounded bg-light d-flex align-items-center justify-content-center h-75">
-                    <img id="imagePreview" src="{{ $footerSlider->image ? asset('uploads/'.$footerSlider->image) : asset('imagePH.png') }}" class="w-100 h-100 object-fit-cover rounded"/>
+                    <img id="imagePreview" src="{{ $footerSlider->image }}" class="w-100 h-100 object-fit-cover rounded"/>
                     <button type="button" id="removeImage" class="btn btn-sm btn-light bg-white border position-absolute top-0 end-0 rounded-circle">×</button>
                 </div>
                 <input type="file" accept="image/*" id="fileInput" name="image" class="d-none" />
@@ -86,7 +86,7 @@ document.getElementById("fileInput").addEventListener("change", function(event) 
     reader.readAsDataURL(file);
 });
 document.getElementById("removeImage").addEventListener("click", function() {
-    document.getElementById("imagePreview").src = "{{ $footerSlider->image ? asset('storage/'.$footerSlider->image) : asset('imagePH.png') }}";
+    document.getElementById("imagePreview").src = "{{ $footerSlider->image }}";
     document.getElementById("fileInput").value = "";
 });
 </script>
