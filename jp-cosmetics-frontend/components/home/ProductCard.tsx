@@ -10,7 +10,7 @@ import { useWishlistStore } from "@/store/wishListStore";
 interface ProductCardProps {
   product?: Product;
   className?: string;
-  wishlisted:boolean
+  wishlisted: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -58,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     },
   },
   className = "",
-  wishlisted : wishlisted
+  wishlisted: wishlisted,
 }) => {
   const [isWishlisted, setIsWishlisted] = useState(wishlisted || false);
   const [imageError, setImageError] = useState(false);
@@ -67,6 +67,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (product.default_attribute.stock < 1) {
+      showToast.error("Requested quantity not available in stock.");
+      return;
+    }
     addItem({
       product_id: product.id,
       product_name: product.name,

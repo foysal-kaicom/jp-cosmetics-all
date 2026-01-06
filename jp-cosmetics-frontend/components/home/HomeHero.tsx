@@ -175,7 +175,7 @@ export default function HomeHero({
           {popularCategories.map((item, i) => (
             <Link
               key={i}
-              href={`/category/${item.slug}`}
+              href={`/shop?page=1&category_id=${item.id}`}
               className="relative flex-1 lg:h-1/2 rounded-2xl overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
             >
               <div className="absolute inset-0">

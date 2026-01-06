@@ -185,7 +185,7 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
         {/* Slider Container */}
         <div
           ref={sliderRef}
-          className="keen-slider scroll-fade-up z-0 py-4 border"
+          className="keen-slider scroll-fade-up z-0 py-4"
         >
           {products.map((product, index) => (
             <ProductCard
