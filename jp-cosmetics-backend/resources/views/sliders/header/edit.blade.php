@@ -15,7 +15,7 @@
             <div class="col-md-3 text-center">
                 <p class="text-muted bg-green-300">Recomendation Image Size: 1085*700 px <span class="text-danger">*</span></p>
                 <div class="position-relative border rounded bg-light d-flex align-items-center justify-content-center h-75">
-                    <img id="imagePreview" src="{{ $headerSlider->image ? asset('uploads/'.$headerSlider->image) : asset('imagePH.png') }}" class="w-100 h-100 object-fit-cover rounded"/>
+                    <img id="imagePreview" src="{{ $headerSlider->image}}" class="w-100 h-100 object-fit-cover rounded"/>
                     <button type="button" id="removeImage" class="btn btn-sm btn-light bg-white border position-absolute top-0 end-0 rounded-circle">×</button>
                 </div>
                 <input type="file" accept="image/*" id="fileInput" name="image" class="d-none" />

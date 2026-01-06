@@ -70,7 +70,7 @@
                     <tr class="text-center">
                         <td>{{ $slider->id }}</td>
                         <td class="d-flex justify-center">
-                            <img src="{{ $slider->image ? asset('uploads/'.$slider->image) : asset('imagePH.png') }}" 
+                            <img src="{{ $slider->image }}" 
                                  class="rounded" width="60" height="60">
                         </td>
                         <td>{{ ucfirst(str_replace('_',' ', $slider->label)) }}</td>
