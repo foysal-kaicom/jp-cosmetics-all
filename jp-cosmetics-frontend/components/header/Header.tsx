@@ -135,7 +135,7 @@ export default function Header({ data }: HeaderProps) {
 
               {/* Account */}
               <Link
-                href="/user/dashboard"
+                href={user?.name ? "/user/dashboard" : "/login"}
                 className="flex flex-col items-center gap-1 text-gray-600 hover:text-pink-600 transition-colors group"
               >
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
@@ -235,7 +235,7 @@ export default function Header({ data }: HeaderProps) {
                   <Heart className="w-6 h-6" />
                   <span className="text-xs">Wishlist</span>
                   <span className="absolute top-0 right-6 bg-pink-600 text-white text-[9px] rounded-full w-4 h-4 flex items-center justify-center">
-                   {wishlistItem.length}
+                    {wishlistItem.length}
                   </span>
                 </Link>
                 <Link

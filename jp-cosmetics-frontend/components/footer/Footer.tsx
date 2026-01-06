@@ -31,7 +31,7 @@ export default function Footer({ data }: FooterProps) {
     setEmail("");
   };
 
-  const footerLogo = data.footer_logo || "/assets/img/jp-cosmetica-logo.png";
+  const footerLogo = data?.footer_logo || "/assets/img/jp-cosmetica-logo.png";
 
   return (
     <footer className="bg-gradient-to-br from-pink-50 via-white to-rose-50">
