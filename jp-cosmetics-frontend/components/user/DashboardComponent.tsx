@@ -61,30 +61,30 @@ export default function DashboardComponent() {
         <StatCard
           icon={Package}
           label="Total Orders"
-          value={dashboard?.total_orders || null}
+          value={dashboard?.total_orders || 0}
           change="+3 this month"
           color="pink"
         />
         <StatCard
           icon={Heart}
           label="Wishlist Items"
-          value={dashboard?.wishlist_items || null}
+          value={dashboard?.wishlist_items || 0}
           change="2 back in stock"
           color="rose"
         />
         <StatCard
           icon={Gift}
           label="Reward Points"
-          value={dashboard?.reward_points || null}
+          value={dashboard?.reward_points || 0}
           change="Earn 50 more"
-          color="purple"
+          color="pink"
         />
         <StatCard
           icon={ShoppingBag}
           label="Total Spent"
           value={dashboard?.total_spent || null}
           change="This year"
-          color="pink"
+          color="rose"
         />
       </div>
 

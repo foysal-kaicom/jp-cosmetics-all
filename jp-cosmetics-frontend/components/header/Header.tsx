@@ -97,7 +97,7 @@ export default function Header({ data }: HeaderProps) {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-medium text-sm">
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-medium text-lg">
               {navdata.map((item) => (
                 <Link
                   key={item.id}
@@ -148,7 +148,7 @@ export default function Header({ data }: HeaderProps) {
 
               {/* Wishlist */}
               <Link
-                href="/user/wishlist"
+                href={user?.name ? "/user/wishlist" : "/login"}
                 className="flex flex-col items-center gap-1 text-gray-600 hover:text-pink-600 transition-colors group relative"
               >
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
@@ -220,7 +220,7 @@ export default function Header({ data }: HeaderProps) {
                   <span className="text-xs">Search</span>
                 </button>
                 <Link
-                  href="/user/dashboard"
+                  href={user?.name ? "/user/dashboard" : "/login"}
                   className="flex flex-col items-center gap-2 text-gray-600"
                 >
                   <User className="w-6 h-6" />
@@ -229,7 +229,7 @@ export default function Header({ data }: HeaderProps) {
                   </span>
                 </Link>
                 <Link
-                  href="/user/wishlist"
+                  href={user?.name ? "/user/wishlist" : "/login"}
                   className="flex flex-col items-center gap-2 text-gray-600 relative"
                 >
                   <Heart className="w-6 h-6" />

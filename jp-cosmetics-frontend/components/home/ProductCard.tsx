@@ -208,10 +208,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Content */}
-      <div className="p-5 space-y-3">
+      <div className="p-5 space-y-3 h-[200px]">
         {/* Category/Brand */}
         {product.category && (
-          <p className="text-xs font-medium text-pink-600 uppercase tracking-wide">
+          <p className="text-xs font-medium text-pink-600 uppercase tracking-wide line-clamp-1">
             {product.category.name}
           </p>
         )}
