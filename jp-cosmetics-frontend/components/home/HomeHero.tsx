@@ -88,8 +88,8 @@ export default function HomeHero({
                 </div>
 
                 {/* Enhanced Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /> */}
 
                 {/* Content */}
                 <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-20 text-white space-y-6 animate-in fade-in slide-in-from-left-8 duration-700">

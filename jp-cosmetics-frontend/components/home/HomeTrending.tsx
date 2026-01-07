@@ -154,7 +154,7 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
       </div>
 
       {/* Slider Section */}
-      <div className="relative group px-2">
+      <div className="relative px-2">
         {/* Navigation Arrows */}
         {loaded && instanceRef.current && (
           <>
@@ -212,7 +212,7 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
                 onClick={() => {
                   instanceRef.current?.moveToIdx(idx);
                 }}
-                className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                className={`w-3 h-3 rounded-full transition-colors duration-200 cursor-pointer ${
                   currentSlide === idx ? "bg-[#ec6b81]" : "bg-gray-300"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}

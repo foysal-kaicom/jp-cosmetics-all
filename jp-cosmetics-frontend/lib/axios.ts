@@ -1,6 +1,7 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useAuthStore } from "@/store/authStore";
+import { setAuthToken, clearAuthToken } from "@/lib/authCookies";
 
 const isServer = typeof window === "undefined";
 
@@ -36,8 +37,9 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const logout = useAuthStore.getState().logout;
-      logout();
+      clearAuthToken();
+      useAuthStore.setState({ user: null });
+      window.location.href = "/login";
 
       // Optional: redirect to login page
       if (typeof window !== "undefined") {

@@ -19,7 +19,7 @@ const DesktopFilters = ({
   activeFiltersCount: number;
 }) => (
   <aside className="hidden lg:block lg:col-span-1">
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6 sticky top-24">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6 sticky top-28">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <SlidersHorizontal className="w-5 h-5 text-pink-600" />
@@ -53,7 +53,7 @@ const DesktopFilters = ({
                 onChange={() => onFilterChange("category", cat.id.toString())}
                 className="w-4 h-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 focus:ring-2 cursor-pointer"
               />
-              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm">
+              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm font-medium">
                 {cat.name}
               </span>
             </label>
@@ -79,7 +79,7 @@ const DesktopFilters = ({
                 onChange={() => onFilterChange("brand", brand.id.toString())}
                 className="w-4 h-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 focus:ring-2 cursor-pointer"
               />
-              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm">
+              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm font-medium">
                 {brand.name}
               </span>
             </label>

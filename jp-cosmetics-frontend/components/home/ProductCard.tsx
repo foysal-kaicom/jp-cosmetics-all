@@ -208,10 +208,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Content */}
-      <div className="p-5 space-y-3">
+      <div className="p-5 space-y-3 h-[200px]">
         {/* Category/Brand */}
         {product.category && (
-          <p className="text-xs font-medium text-pink-600 uppercase tracking-wide">
+          <p className="text-xs font-medium text-pink-600 uppercase tracking-wide line-clamp-1">
             {product.category.name}
           </p>
         )}
@@ -250,7 +250,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 : product.default_attribute.unit_price}
             </p>
             {product.default_attribute.discount_percentage > 0 && (
-              <p className="text-sm text-gray-400 line-through">
+              <p className="text-sm text-gray-600 line-through ">
                 BDT {product.default_attribute.unit_price}
               </p>
             )}

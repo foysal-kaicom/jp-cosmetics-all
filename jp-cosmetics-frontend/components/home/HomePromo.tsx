@@ -77,7 +77,7 @@ const HomePromo = ({ footerSliders }: { footerSliders: FooterSlider[] }) => {
                   onClick={() => {
                     instanceRef.current?.moveToIdx(idx);
                   }}
-                  className={`w-3 h-3 rounded-full transition-colors duration-200 shadow-sm ${
+                  className={`w-3 h-3 rounded-full transition-colors duration-200 shadow-sm cursor-pointer ${
                     currentSlide === idx
                       ? "bg-white"
                       : "bg-white/50 hover:bg-white/80"

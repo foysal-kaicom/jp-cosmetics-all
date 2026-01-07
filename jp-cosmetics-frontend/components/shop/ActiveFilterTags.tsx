@@ -60,7 +60,7 @@ const ActiveFilterTags = ({
 
       <button
         onClick={onClearAll}
-        className="text-sm text-gray-600 hover:text-pink-600 font-medium underline ml-2"
+        className="text-sm text-gray-600 hover:text-pink-600 font-medium underline ml-2 cursor-pointer"
       >
         Clear all
       </button>

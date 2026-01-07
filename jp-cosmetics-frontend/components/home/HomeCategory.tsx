@@ -49,7 +49,7 @@ const HomeCategory = ({ popularCategories }: { popularCategories: Category[] }) 
         className="mb-10"
       />
 
-      <div className="relative group px-4">
+      <div className="relative px-4">
         {/* Navigation Arrows */}
         {loaded && instanceRef.current && (
           <>
