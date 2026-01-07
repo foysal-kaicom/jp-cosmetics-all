@@ -19,7 +19,7 @@ const DesktopFilters = ({
   activeFiltersCount: number;
 }) => (
   <aside className="hidden lg:block lg:col-span-1">
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6 sticky top-24">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6 sticky top-28">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <SlidersHorizontal className="w-5 h-5 text-pink-600" />

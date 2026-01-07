@@ -108,11 +108,11 @@ const ProductListComponent = ({
               onChange={(e) => handleSortChange(e.target.value)}
               className="appearance-none pl-4 pr-10 py-2.5 bg-white border-2 border-gray-200 rounded-xl hover:border-pink-400 focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all cursor-pointer text-sm font-medium"
             >
-              <option value="newest">Newest First</option>
-              <option value="price_low">Price: Low to High</option>
-              <option value="price_high">Price: High to Low</option>
-              <option value="name_asc">Name (A-Z)</option>
-              <option value="name_desc">Name (Z-A)</option>
+              <option value="newest" className="font-medium text-gray-700">Newest First</option>
+              <option value="price_low" className="font-medium text-gray-700">Price: Low to High</option>
+              <option value="price_high" className="font-medium text-gray-700">Price: High to Low</option>
+              <option value="name_asc" className="font-medium text-gray-700">Name (A-Z)</option>
+              <option value="name_desc" className="font-medium text-gray-700">Name (Z-A)</option>
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
           </div>

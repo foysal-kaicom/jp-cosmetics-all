@@ -110,7 +110,7 @@ export default function Header({ data }: HeaderProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-pink-500 to-rose-600 transition-all duration-300 ${
+                    className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] rounded-full bg-gradient-to-r from-pink-500 to-rose-600 transition-all duration-300 ${
                       pathname === item.link
                         ? "w-full"
                         : "w-0 group-hover:w-full"

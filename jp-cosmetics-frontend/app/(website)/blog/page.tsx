@@ -180,9 +180,9 @@ const Blog = () => {
                 placeholder="Search articles, tips, tutorials..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pl-14 rounded-full text-gray-900 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg"
+                className="w-full px-6 py-4 pl-14 rounded-full text-white bg-white/5 outline outline-rose-700 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg shadow-rose-700"
               />
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" />
             </div>
           </div>
         </div>
