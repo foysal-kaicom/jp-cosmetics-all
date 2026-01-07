@@ -1,0 +1,76 @@
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./jp-cosmetics-backend:/var/www/backend:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+    restart: always
+
+  frontend:
+    build:
+      context: ./jp-cosmetics-frontend
+      args:
+        - NEXT_PUBLIC_SKIP_FETCH_ON_BUILD=1
+    container_name: frontend
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_BASE_URL: /api/v1
+    networks:
+      - app-network
+    restart: always
+
+  backend:
+    build: ./jp-cosmetics-backend
+    container_name: backend
+    working_dir: /var/www/backend
+    volumes:
+      - ./jp-cosmetics-backend:/var/www/backend
+    expose:
+      - "9000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+    restart: always
+
+  queue:
+    build: ./jp-cosmetics-backend
+    container_name: queue
+    working_dir: /var/www/backend
+    command: php artisan queue:work --tries=3 --timeout=90
+    volumes:
+      - ./jp-cosmetics-backend:/var/www/backend
+    depends_on:
+      - db
+    networks:
+      - app-network
+    restart: always
+
+  db:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: jp_cosmetics
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  dbdata:
+
+networks:
+  app-network:
+    driver: bridge
