@@ -68,14 +68,14 @@ export default function Header({ data }: HeaderProps) {
       <div className="bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white shadow-sm">
         <div className="px-[5%] flex items-center justify-between text-[11px] md:text-xs">
           <div className="flex items-center divide-x divide-pink-400/30">
-            <p className="py-2.5 pr-4 md:pr-6 hidden sm:block font-light">
+            <p className="py-2.5 pr-4 md:pr-6 hidden sm:block font-medium">
               ✨ Free Shipping on Orders Over $50
             </p>
-            <p className="py-2.5 px-4 md:px-6 font-light hover:text-pink-100 cursor-pointer transition-colors">
+            <p className="py-2.5 px-4 md:px-6 font-medium hover:text-pink-100 cursor-pointer transition-colors">
               Help & Advice
             </p>
           </div>
-          <div className="py-2.5 pl-4 md:pl-6 font-light hover:text-pink-100 cursor-pointer transition-colors">
+          <div className="py-2.5 pl-4 md:pl-6 font-medium hover:text-pink-100 cursor-pointer transition-colors">
             Welcome {user?.name ? user?.name : "(Login)"}
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function Header({ data }: HeaderProps) {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-medium text-lg">
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-semibold text-lg">
               {navdata.map((item) => (
                 <Link
                   key={item.id}
@@ -121,7 +121,7 @@ export default function Header({ data }: HeaderProps) {
             </nav>
 
             {/* Desktop Icons */}
-            <div className="hidden lg:flex items-center gap-4 lg:gap-6">
+            <div className="hidden lg:flex items-center gap-4 lg:gap-6 font-semibold">
               {/* Search Button */}
               <button
                 onClick={() => setSearchOpen(true)}
@@ -130,7 +130,7 @@ export default function Header({ data }: HeaderProps) {
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
                   <Search className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-medium">Search</span>
+                <span className="text-[12px]">Search</span>
               </button>
 
               {/* Account */}
@@ -141,7 +141,7 @@ export default function Header({ data }: HeaderProps) {
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
                   <User className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-medium">
+                <span className="text-[12px]">
                   {user?.name ? user?.name : "Account"}
                 </span>
               </Link>
@@ -154,7 +154,7 @@ export default function Header({ data }: HeaderProps) {
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
                   <Heart className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-medium">Wishlist</span>
+                <span className="text-[12px]">Wishlist</span>
                 <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-rose-600 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                   {wishlistItem.length}
                 </span>
@@ -168,7 +168,7 @@ export default function Header({ data }: HeaderProps) {
                 <div className="p-2 rounded-full group-hover:bg-pink-50 transition-colors">
                   <ShoppingCart className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-medium">Cart</span>
+                <span className="text-[12px]">Cart</span>
                 <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-rose-600 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                   {items?.length ?? 0}
                 </span>
@@ -190,7 +190,7 @@ export default function Header({ data }: HeaderProps) {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden py-4 border-t border-gray-100">
+            <div className="lg:hidden py-4 border-t border-gray-100 font-semibold">
               <nav className="flex flex-col gap-4">
                 {navdata.map((item) => (
                   <Link

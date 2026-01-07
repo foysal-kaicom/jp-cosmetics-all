@@ -250,7 +250,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 : product.default_attribute.unit_price}
             </p>
             {product.default_attribute.discount_percentage > 0 && (
-              <p className="text-sm text-gray-400 line-through">
+              <p className="text-sm text-gray-600 line-through ">
                 BDT {product.default_attribute.unit_price}
               </p>
             )}

@@ -53,7 +53,7 @@ const DesktopFilters = ({
                 onChange={() => onFilterChange("category", cat.id.toString())}
                 className="w-4 h-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 focus:ring-2 cursor-pointer"
               />
-              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm">
+              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm font-medium">
                 {cat.name}
               </span>
             </label>
@@ -79,7 +79,7 @@ const DesktopFilters = ({
                 onChange={() => onFilterChange("brand", brand.id.toString())}
                 className="w-4 h-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 focus:ring-2 cursor-pointer"
               />
-              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm">
+              <span className="text-gray-700 group-hover:text-pink-600 transition-colors text-sm font-medium">
                 {brand.name}
               </span>
             </label>

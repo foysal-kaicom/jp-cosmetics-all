@@ -160,11 +160,11 @@ const Contact = () => {
                         {info.title}
                       </h3>
                       {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-gray-700 text-sm">
+                        <p key={idx} className="text-gray-700 text-sm font-medium">
                           {detail}
                         </p>
                       ))}
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 mt-1 font-medium">
                         {info.description}
                       </p>
                     </div>
@@ -200,7 +200,7 @@ const Contact = () => {
             {/* Quick Note */}
             <div className="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-xl shadow-lg p-6">
               <h3 className="text-xl font-bold mb-2">Need Quick Help?</h3>
-              <p className="text-pink-50 text-sm mb-4">
+              <p className="text-pink-50 text-sm mb-4 font-medium">
                 Our customer support team is always ready to assist you with any
                 questions or concerns.
               </p>

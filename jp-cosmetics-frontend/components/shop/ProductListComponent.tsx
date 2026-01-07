@@ -98,7 +98,7 @@ const ProductListComponent = ({
             )}
           </button>
 
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-gray-600 font-medium">
             <span className="font-semibold text-gray-900">{paginationData.total}</span> products found
           </div>
 

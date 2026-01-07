@@ -64,7 +64,7 @@ const HomeReview = () => {
               <div className="max-w-3xl text-center flex flex-col items-center mx-auto tracking-wider text-sm leading-7">
                 <Quote className="rotate-180 text-[#ec6b81] size-8" />
 
-                <p className="text-gray-500 my-3">
+                <p className="text-gray-500 my-3 font-medium">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Nihil tenetur est ipsum dolorum a ullam sint saepe assumenda,
                   laboriosam labore impedit, esse aliquid similique temporibus
@@ -82,7 +82,7 @@ const HomeReview = () => {
                 />
 
                 <p className="font-semibold text-[#ec6b81]">Miss. Jenny Doe</p>
-                <p className="text-gray-400">Founder</p>
+                <p className="text-gray-400 font-medium">Founder</p>
               </div>
             </div>
           ))}

@@ -92,7 +92,7 @@ export default function Footer({ data }: FooterProps) {
                   priority
                 />
               </Link>
-              <p className="text-sm text-gray-600 leading-relaxed mb-6">
+              <p className="text-sm text-gray-600 leading-relaxed mb-6 font-medium mt-1">
                 Discover elegance and self-care with our exclusive collection of
                 premium beauty products.
               </p>
@@ -136,7 +136,7 @@ export default function Footer({ data }: FooterProps) {
                 Help & Information
                 <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full"></span>
               </h3>
-              <ul className="space-y-3 text-sm">
+              <ul className="space-y-3 text-sm font-medium">
                 <li>
                   <a
                     href="#"
@@ -186,7 +186,7 @@ export default function Footer({ data }: FooterProps) {
                 About
                 <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full"></span>
               </h3>
-              <ul className="space-y-3 text-sm">
+              <ul className="space-y-3 text-sm font-medium">
                 <li>
                   <a
                     href="#"
@@ -237,7 +237,7 @@ export default function Footer({ data }: FooterProps) {
                 <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full"></span>
               </h3>
 
-              <ul className="space-y-4 text-sm">
+              <ul className="space-y-4 text-sm font-medium">
                 <li className="flex items-start gap-3 text-gray-600">
                   <MapPin className="w-5 h-5 text-pink-600 flex-shrink-0 mt-0.5" />
                   <div>
@@ -279,7 +279,7 @@ export default function Footer({ data }: FooterProps) {
               <span className="font-semibold text-pink-600">Cosmetica</span>.
               All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 font-medium">
               <a href="#" className="hover:text-pink-600 transition-colors">
                 Privacy Policy
               </a>
