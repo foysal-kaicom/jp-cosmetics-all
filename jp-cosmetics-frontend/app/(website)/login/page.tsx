@@ -21,6 +21,8 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
+import { showToast } from "@/utils/toast";
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -46,7 +48,7 @@ const Login = () => {
       router.push("/user/dashboard");
     } catch (err) {
       console.error(err);
-      alert("Invalid email or password");
+      showToast.error("Invalid email or password");
     }
   };
 

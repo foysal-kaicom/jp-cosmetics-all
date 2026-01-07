@@ -53,7 +53,7 @@ const HomePromo = ({ footerSliders }: { footerSliders: FooterSlider[] }) => {
           {footerSliders.map((slider, index) => (
             <div key={index} className="keen-slider__slide">
               <Image
-                src={slider.image}
+                src={slider?.image}
                 alt="Promo Banner"
                 className="h-[250px] w-full object-cover aspect-auto rounded-lg" // Added rounded-lg for better aesthetics
                 width={1000}
