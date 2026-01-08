@@ -162,10 +162,10 @@ const Cart = () => {
                       </button>
                     </div>
 
-                    <button className="flex items-center gap-2 text-sm mt-4 cursor-pointer">
+                    {/* <button className="flex items-center gap-2 text-sm mt-4 cursor-pointer">
                       <Heart className="w-4 h-4" />
                       Move to Wishlist
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

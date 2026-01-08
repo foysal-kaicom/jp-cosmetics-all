@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import { 
-  Mail, 
-  Lock, 
-  Eye, 
+import React, { useState } from "react";
+import {
+  Mail,
+  Lock,
+  Eye,
   EyeOff,
   User,
   Phone,
@@ -15,13 +15,14 @@ import {
   Gift,
   Truck,
   Crown,
-  Heart
-} from 'lucide-react';
+  Heart,
+} from "lucide-react";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import apiClient from '@/lib/axios';
+import apiClient from "@/lib/axios";
+import { showToast } from "@/utils/toast";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,36 +30,38 @@ const Signup = () => {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [subscribeNewsletter, setSubscribeNewsletter] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   });
-  
+
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
-    feedback: ''
+    feedback: "",
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
 
     // Password strength check
-    if (name === 'password') {
+    if (name === "password") {
       checkPasswordStrength(value);
     }
   };
 
   const checkPasswordStrength = (password: string) => {
     let score = 0;
-    let feedback = '';
+    let feedback = "";
 
     if (password.length >= 8) score++;
     if (password.match(/[a-z]/)) score++;
@@ -66,57 +69,67 @@ const Signup = () => {
     if (password.match(/[0-9]/)) score++;
     if (password.match(/[^a-zA-Z0-9]/)) score++;
 
-    if (score === 0) feedback = '';
-    else if (score <= 2) feedback = 'Weak';
-    else if (score === 3) feedback = 'Fair';
-    else if (score === 4) feedback = 'Good';
-    else feedback = 'Strong';
+    if (score === 0) feedback = "";
+    else if (score <= 2) feedback = "Weak";
+    else if (score === 3) feedback = "Fair";
+    else if (score === 4) feedback = "Good";
+    else feedback = "Strong";
 
     setPasswordStrength({ score, feedback });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
     try {
-    const res = await apiClient.post("/register", formData);
-    router.push("/login");
-  } catch (err) {
-    console.error(err);
-    alert("Invalid credentials");
-  }
+      const res = await apiClient.post("/register", formData);
+      router.push("/login");
+    } catch (err: any) {
+      const errors = err?.response?.data?.errors;
+
+      if (errors) {
+        Object.values(errors).forEach((messages: any) => {
+          messages.forEach((msg: string) => {
+            showToast.error(msg);
+          });
+        });
+      } else {
+        showToast.error("Something went wrong");
+      }
+    }
   };
 
   const benefits = [
     {
       icon: <Gift className="w-6 h-6" />,
       title: "Welcome Gift",
-      description: "Get 20% off your first purchase"
+      description: "Get 20% off your first purchase",
     },
     {
       icon: <Truck className="w-6 h-6" />,
       title: "Free Shipping",
-      description: "On all orders above ৳500"
+      description: "On all orders above ৳500",
     },
     {
       icon: <Crown className="w-6 h-6" />,
       title: "VIP Access",
-      description: "Early access to new collections"
+      description: "Early access to new collections",
     },
     {
       icon: <Heart className="w-6 h-6" />,
       title: "Birthday Rewards",
-      description: "Special gifts on your birthday"
-    }
+      description: "Special gifts on your birthday",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-3 mb-6 group cursor-pointer">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 mb-6 group cursor-pointer"
+          >
             <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
@@ -124,16 +137,18 @@ const Signup = () => {
               Cosmetica
             </span>
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Create Your Account</h1>
-          <p className="text-lg text-gray-600">Join thousands of beauty enthusiasts today!</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            Create Your Account
+          </h1>
+          <p className="text-lg text-gray-600">
+            Join thousands of beauty enthusiasts today!
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8">
-          
           {/* Main Form */}
           <div className="order-2 lg:order-1">
             <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10">
-
               {/* Social Signup */}
               {/* <div className="space-y-3 mb-6">
                 <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-300 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition-all font-semibold text-gray-700 cursor-pointer">
@@ -154,11 +169,13 @@ const Signup = () => {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
-                
                 {/* Personal Info Fields */}
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-gray-900 mb-2"
+                    >
                       Name *
                     </label>
                     <div className="relative">
@@ -197,7 +214,10 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-gray-900 mb-2"
+                  >
                     Email Address *
                   </label>
                   <div className="relative">
@@ -216,7 +236,10 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-semibold text-gray-900 mb-2"
+                  >
                     Phone Number *
                   </label>
                   <div className="relative">
@@ -235,13 +258,16 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-semibold text-gray-900 mb-2"
+                  >
                     Password *
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
                       value={formData.password}
@@ -255,10 +281,14 @@ const Signup = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
                     </button>
                   </div>
-                  
+
                   {/* Password Strength Indicator */}
                   {formData.password && (
                     <div className="mt-2">
@@ -269,22 +299,24 @@ const Signup = () => {
                             className={`h-1.5 flex-1 rounded ${
                               i < passwordStrength.score
                                 ? passwordStrength.score <= 2
-                                  ? 'bg-red-500'
+                                  ? "bg-red-500"
                                   : passwordStrength.score === 3
-                                  ? 'bg-yellow-500'
-                                  : 'bg-green-500'
-                                : 'bg-gray-200'
+                                  ? "bg-yellow-500"
+                                  : "bg-green-500"
+                                : "bg-gray-200"
                             }`}
                           />
                         ))}
                       </div>
-                      <p className={`text-xs font-medium ${
-                        passwordStrength.score <= 2
-                          ? 'text-red-600'
-                          : passwordStrength.score === 3
-                          ? 'text-yellow-600'
-                          : 'text-green-600'
-                      }`}>
+                      <p
+                        className={`text-xs font-medium ${
+                          passwordStrength.score <= 2
+                            ? "text-red-600"
+                            : passwordStrength.score === 3
+                            ? "text-yellow-600"
+                            : "text-green-600"
+                        }`}
+                      >
                         Password Strength: {passwordStrength.feedback}
                       </p>
                     </div>
@@ -292,13 +324,16 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm font-semibold text-gray-900 mb-2"
+                  >
                     Confirm Password *
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
-                      type={showConfirmPassword ? 'text' : 'password'}
+                      type={showConfirmPassword ? "text" : "password"}
                       id="confirmPassword"
                       name="confirmPassword"
                       value={formData.confirmPassword}
@@ -309,38 +344,71 @@ const Signup = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
                     >
-                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showConfirmPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
                     </button>
                   </div>
-                  {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                    <div className="flex items-center gap-2 mt-2 text-red-600">
-                      <AlertCircle className="w-4 h-4" />
-                      <span className="text-xs">Passwords do not match</span>
-                    </div>
-                  )}
+                  {formData.confirmPassword &&
+                    formData.password !== formData.confirmPassword && (
+                      <div className="flex items-center gap-2 mt-2 text-red-600">
+                        <AlertCircle className="w-4 h-4" />
+                        <span className="text-xs">Passwords do not match</span>
+                      </div>
+                    )}
                 </div>
 
                 {/* Password Requirements */}
                 <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-xs font-semibold text-gray-900 mb-2">Password must contain:</p>
+                  <p className="text-xs font-semibold text-gray-900 mb-2">
+                    Password must contain:
+                  </p>
                   <ul className="space-y-1 text-xs text-gray-600">
                     <li className="flex items-center gap-2">
-                      <CheckCircle className={`w-3.5 h-3.5 ${formData.password.length >= 8 ? 'text-green-600' : 'text-gray-400'}`} />
+                      <CheckCircle
+                        className={`w-3.5 h-3.5 ${
+                          formData.password.length >= 8
+                            ? "text-green-600"
+                            : "text-gray-400"
+                        }`}
+                      />
                       At least 8 characters
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className={`w-3.5 h-3.5 ${formData.password.match(/[A-Z]/) ? 'text-green-600' : 'text-gray-400'}`} />
+                      <CheckCircle
+                        className={`w-3.5 h-3.5 ${
+                          formData.password.match(/[A-Z]/)
+                            ? "text-green-600"
+                            : "text-gray-400"
+                        }`}
+                      />
                       One uppercase letter
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className={`w-3.5 h-3.5 ${formData.password.match(/[0-9]/) ? 'text-green-600' : 'text-gray-400'}`} />
+                      <CheckCircle
+                        className={`w-3.5 h-3.5 ${
+                          formData.password.match(/[0-9]/)
+                            ? "text-green-600"
+                            : "text-gray-400"
+                        }`}
+                      />
                       One number
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className={`w-3.5 h-3.5 ${formData.password.match(/[^a-zA-Z0-9]/) ? 'text-green-600' : 'text-gray-400'}`} />
+                      <CheckCircle
+                        className={`w-3.5 h-3.5 ${
+                          formData.password.match(/[^a-zA-Z0-9]/)
+                            ? "text-green-600"
+                            : "text-gray-400"
+                        }`}
+                      />
                       One special character
                     </li>
                   </ul>
@@ -360,7 +428,8 @@ const Signup = () => {
                         Subscribe to our newsletter
                       </span>
                       <p className="text-xs text-gray-600 mt-1">
-                        Get exclusive offers, beauty tips, and early access to new products
+                        Get exclusive offers, beauty tips, and early access to
+                        new products
                       </p>
                     </div>
                   </label>
@@ -374,12 +443,18 @@ const Signup = () => {
                       className="w-5 h-5 rounded border-gray-300 text-pink-600 focus:ring-pink-500 cursor-pointer mt-0.5"
                     />
                     <span className="text-sm text-gray-700">
-                      I agree to the{' '}
-                      <Link href="/terms" className="text-pink-600 hover:text-pink-700 font-semibold cursor-pointer">
+                      I agree to the{" "}
+                      <Link
+                        href="/terms"
+                        className="text-pink-600 hover:text-pink-700 font-semibold cursor-pointer"
+                      >
                         Terms & Conditions
-                      </Link>
-                      {' '}and{' '}
-                      <Link href="/privacy" className="text-pink-600 hover:text-pink-700 font-semibold cursor-pointer">
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/privacy"
+                        className="text-pink-600 hover:text-pink-700 font-semibold cursor-pointer"
+                      >
                         Privacy Policy
                       </Link>
                     </span>
@@ -397,8 +472,11 @@ const Signup = () => {
 
               {/* Sign In Link */}
               <p className="text-center text-sm text-gray-600 mt-6">
-                Already have an account?{' '}
-                <Link href="/login" className="font-semibold text-pink-600 hover:text-pink-700 cursor-pointer">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="font-semibold text-pink-600 hover:text-pink-700 cursor-pointer"
+                >
                   Sign In
                 </Link>
               </p>
@@ -407,7 +485,6 @@ const Signup = () => {
 
           {/* Benefits Sidebar */}
           <div className="order-1 lg:order-2 space-y-6">
-            
             {/* Welcome Offer */}
             <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-3xl shadow-2xl p-8 text-white">
               <div className="flex items-center gap-3 mb-4">
@@ -415,12 +492,15 @@ const Signup = () => {
                   <Gift className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-pink-100">Welcome Offer</p>
+                  <p className="text-sm font-medium text-pink-100">
+                    Welcome Offer
+                  </p>
                   <p className="text-2xl font-bold">20% OFF</p>
                 </div>
               </div>
               <p className="text-pink-50 text-sm">
-                Join now and get an exclusive 20% discount on your first purchase. Limited time offer!
+                Join now and get an exclusive 20% discount on your first
+                purchase. Limited time offer!
               </p>
             </div>
 
@@ -432,13 +512,20 @@ const Signup = () => {
               </h3>
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-3 rounded-xl hover:bg-pink-50 transition-colors"
+                  >
                     <div className="w-10 h-10 bg-gradient-to-br from-pink-100 to-rose-100 rounded-lg flex items-center justify-center text-pink-600 flex-shrink-0">
                       {benefit.icon}
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{benefit.title}</h4>
-                      <p className="text-xs text-gray-600">{benefit.description}</p>
+                      <h4 className="font-semibold text-gray-900 text-sm">
+                        {benefit.title}
+                      </h4>
+                      <p className="text-xs text-gray-600">
+                        {benefit.description}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -450,10 +537,12 @@ const Signup = () => {
               <div className="flex items-start gap-3">
                 <ShieldCheck className="w-8 h-8 text-pink-600 flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-2">Your Data is Safe</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    Your Data is Safe
+                  </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    We use industry-standard 256-bit SSL encryption to protect your personal information. 
-                    Your privacy is our top priority.
+                    We use industry-standard 256-bit SSL encryption to protect
+                    your personal information. Your privacy is our top priority.
                   </p>
                 </div>
               </div>
@@ -461,7 +550,9 @@ const Signup = () => {
 
             {/* Trust Indicators */}
             <div className="bg-gray-50 rounded-3xl p-6">
-              <p className="text-xs text-gray-600 text-center mb-3">Trusted by over 50,000+ customers</p>
+              <p className="text-xs text-gray-600 text-center mb-3">
+                Trusted by over 50,000+ customers
+              </p>
               <div className="flex items-center justify-center gap-6">
                 <div className="text-center">
                   <p className="text-2xl font-bold text-pink-600">50k+</p>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { orderService } from "@/services/user.service";
 import type { Order } from "@/types/user";
 
-import { CheckCircle, HandCoins, X } from "lucide-react";
+import { TruckElectric, HandCoins, X } from "lucide-react";
 
 import { formatDate } from "@/utils/formatDate";
 
@@ -59,7 +59,7 @@ export default function OrdersSection() {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">My Orders</h2>
 
-        <div className="space-y-4">
+        <div className="gap-4 grid md:grid-cols-2 2xl:grid-cols-3">
           {orders.map((order) => (
             <div
               key={order.id}
@@ -81,7 +81,7 @@ export default function OrdersSection() {
 
               <div className="flex items-center gap-4 mb-4">
                 <span
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold w-fit ${
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold w-fit capitalize ${
                     statusColors[order.payment_status] ||
                     "bg-gray-100 text-gray-800"
                   }`}
@@ -90,11 +90,11 @@ export default function OrdersSection() {
                   {order?.payment_status}
                 </span>
                 <span
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold w-fit ${
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold w-fit capitalize ${
                     statusColors[order.status] || "bg-gray-100 text-gray-800"
                   } `}
                 >
-                  <CheckCircle className="w-4 h-4" />
+                  <TruckElectric className="w-4 h-4" />
                   {order?.status}
                 </span>
               </div>
@@ -118,9 +118,9 @@ export default function OrdersSection() {
                 >
                   Track Order
                 </button> */}
-                <button className="flex-1 px-4 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all cursor-pointer">
+                {/* <button className="flex-1 px-4 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all cursor-pointer">
                   Reorder
-                </button>
+                </button> */}
               </div>
             </div>
           ))}
