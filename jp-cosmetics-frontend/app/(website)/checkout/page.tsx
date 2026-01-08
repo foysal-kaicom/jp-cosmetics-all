@@ -43,12 +43,12 @@ export default function CheckoutPage() {
       charge: 60,
       isDefault: true,
     },
-    {
-      id: 2,
-      type: "online",
-      name: "Online Payment",
-      charge: 120,
-    },
+    // {
+    //   id: 2,
+    //   type: "online",
+    //   name: "Online Payment",
+    //   charge: 120,
+    // },
   ];
 
   const selectedPaymentCharge = paymentMethods[selectedPayment]?.charge ?? 0;
@@ -145,7 +145,7 @@ export default function CheckoutPage() {
       showToast.success("Order placed successfully!");
 
       clearCart();
-      router.push(`/user/orders?order_id=${response.data.order_id}`);
+      router.push(`/user/orders`);
     } catch (error: any) {
       showToast.error(
         error?.response?.data?.message ??
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* RIGHT */}
-          <div className="bg-white rounded-2xl p-6 border sticky top-6 h-fit">
+          <div className="bg-white rounded-2xl p-6 border sticky top-28 h-fit">
             <h2 className="text-xl font-bold mb-6">Order Summary</h2>
 
             {/* PROMO */}

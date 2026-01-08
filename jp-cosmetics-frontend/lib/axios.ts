@@ -3,7 +3,7 @@ import { parseCookies } from "nookies";
 import { useAuthStore } from "@/store/authStore";
 import { setAuthToken, clearAuthToken } from "@/lib/authCookies";
 
-const isServer = typeof window === "undefined";
+const isServer = typeof window === "undefined"
 
 const baseURL = isServer
   ? process.env.INTERNAL_API_BASE_URL
@@ -32,23 +32,27 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor: auto logout on 401
+
 apiClient.interceptors.response.use(
-  (response) => response,
+  (res) => res,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+
+    if (status === 401 && typeof window !== "undefined") {
       clearAuthToken();
       useAuthStore.setState({ user: null });
-      window.location.href = "/login";
 
-      // Optional: redirect to login page
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      }
+      // client-side soft navigation
+      import("next/navigation").then(({ redirect }) => {
+        redirect("/login");
+      });
+
+      return;
     }
 
     return Promise.reject(error);
   }
 );
+
 
 export default apiClient;
