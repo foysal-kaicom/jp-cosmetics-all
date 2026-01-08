@@ -1,5 +1,5 @@
 import { Package } from "lucide-react";
-import { CheckCircle } from "lucide-react";
+import { TruckElectric } from "lucide-react";
 
 import { Order } from "@/types/user";
 import { formatDate } from "@/utils/formatDate";
@@ -39,7 +39,7 @@ function OrderCard({ order }: OrderCardProps) {
           }`}
         >
           {" "}
-          <CheckCircle className="w-4 h-4" />
+          <TruckElectric className="w-4 h-4" />
           {order.status}
         </span>
       </div>

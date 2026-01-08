@@ -8,100 +8,6 @@ import WebPageWrapper from "../WebPageWrapper";
 import Headline from "../Headline";
 import { Product } from "@/types";
 
-// Type definition
-// export type Product = {
-//   mainImg: string;
-//   subImg: string;
-//   rate: number;
-//   prevprice: number;
-//   price: number;
-//   label: string;
-//   badge: string;
-//   discount: string;
-//   catId: number;
-// };
-
-// Mock Data (Expanded to demonstrate scrolling)
-// const products: Product[] = [
-//   {
-//     mainImg: "/assets/img/product/product2.png",
-//     subImg: "/assets/img/product/product1.png",
-//     rate: 3,
-//     prevprice: 60.99,
-//     price: 49.99,
-//     label: "Luxury Makeup Kit",
-//     badge: "new",
-//     discount: "10% off",
-//     catId: 1,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product3.png",
-//     subImg: "/assets/img/product/product4.png",
-//     rate: 4,
-//     prevprice: 80.0,
-//     price: 65.5,
-//     label: "Hydrating Serum",
-//     badge: "hot",
-//     discount: "15% off",
-//     catId: 1,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product2.png",
-//     subImg: "/assets/img/product/product1.png",
-//     rate: 5,
-//     prevprice: 45.0,
-//     price: 30.0,
-//     label: "Matte Lipstick",
-//     badge: "sale",
-//     discount: "20% off",
-//     catId: 2,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product3.png",
-//     subImg: "/assets/img/product/product4.png",
-//     rate: 4,
-//     prevprice: 120.0,
-//     price: 100.0,
-//     label: "Night Cream",
-//     badge: "new",
-//     discount: "5% off",
-//     catId: 2,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product2.png",
-//     subImg: "/assets/img/product/product1.png",
-//     rate: 3,
-//     prevprice: 55.0,
-//     price: 45.0,
-//     label: "Face Cleanser",
-//     badge: "",
-//     discount: "",
-//     catId: 1,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product3.png",
-//     subImg: "/assets/img/product/product4.png",
-//     rate: 5,
-//     prevprice: 70.0,
-//     price: 60.0,
-//     label: "Eye Shadow Palette",
-//     badge: "hot",
-//     discount: "10% off",
-//     catId: 3,
-//   },
-//   {
-//     mainImg: "/assets/img/product/product2.png",
-//     subImg: "/assets/img/product/product1.png",
-//     rate: 4,
-//     prevprice: 35.0,
-//     price: 25.0,
-//     label: "Blush Brush",
-//     badge: "",
-//     discount: "",
-//     catId: 3,
-//   },
-// ];
-
 const HomeTrending = ({ products }: { products: Product[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -191,7 +97,7 @@ const HomeTrending = ({ products }: { products: Product[] }) => {
             <ProductCard
               key={index}
               product={product}
-              className="keen-slider__slide m-1.5 h-full"
+              className="keen-slider__slide h-full"
               wishlisted={false}
             />
           ))}

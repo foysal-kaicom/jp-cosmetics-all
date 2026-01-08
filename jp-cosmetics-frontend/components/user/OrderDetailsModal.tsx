@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { CheckCircle, HandCoins, X } from "lucide-react";
+import { TruckElectric, HandCoins, X } from "lucide-react";
 import { OrderDetailResponse } from "@/types/user";
 import { orderService } from "@/services/user.service";
 
@@ -67,7 +67,7 @@ export const OrderDetailsModal = ({
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 rounded-full p-1 bg-red-600 text-white transition hover:rotate-360 duration-300"
+          className="absolute top-2 right-2 rounded-full p-1 bg-red-600 text-white transition hover:rotate-360 duration-300 cursor-pointer"
         >
           <X className="size-4" />
         </button>
@@ -80,7 +80,7 @@ export const OrderDetailsModal = ({
             </h2>
             <div className="flex flex-wrap gap-1">
               <div
-                className={`flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${
+                className={`flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold capitalize ${
                   statusColors[orderDetails?.order?.payment_status] ||
                   "bg-gray-100 text-gray-800"
                 }`}
@@ -89,12 +89,12 @@ export const OrderDetailsModal = ({
                 {orderDetails?.order?.payment_status}
               </div>
               <div
-                className={`flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${
+                className={`flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold capitalize ${
                   statusColors[orderDetails?.order?.order_status] ||
                   "bg-gray-100 text-gray-800"
                 }`}
               >
-                <CheckCircle className="w-4 h-4" />
+                <TruckElectric className="w-4 h-4" />
                 {orderDetails?.order?.order_status}
               </div>
             </div>
