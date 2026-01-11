@@ -153,6 +153,7 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, $id)
     {
+
         DB::beginTransaction();
 
         try {
@@ -173,6 +174,7 @@ class ProductController extends Controller
             } else {
                 $data['primary_image'] = $product->primary_image;
             }
+
 
             $product->update([
                 'name' => $data['name'],
@@ -237,6 +239,7 @@ class ProductController extends Controller
                         ]);
                     }
 
+                   
                     if (isset($attr['attribute_images'])) {
                         $filesForThisAttr = $attr['attribute_images'];
                         if (count($filesForThisAttr) > 0) {
@@ -245,7 +248,7 @@ class ProductController extends Controller
 
                             foreach ($filesForThisAttr as $imgFile) {
                                 if (!$imgFile) continue;
-                                $uploadResp = $this->fileStorageService->updateFileFromCloud($imgFile, 'product-attribute');
+                                $uploadResp = $this->fileStorageService->uploadImageToCloud($imgFile, 'product-attribute');
                                 $publicPath = $uploadResp['public_path'] ?? null;
 
                                 ProductAttributeImage::create([
