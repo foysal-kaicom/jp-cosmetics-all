@@ -23,13 +23,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ProductCard from "@/components/home/ProductCard";
-import { SingleProduct } from "@/types";
+import { SingleProduct,ProductList } from "@/types";
 import Image from "next/image";
 import { useCartStore } from "@/store/cart-store";
 import { showToast } from "@/utils/toast";
 
-const ProductDetails = ({ product }: { product: SingleProduct }) => {
+
+interface responseProps {
+  product : SingleProduct,
+  relatedProduct: ProductList
+}
+
+const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
   console.log(product);
+  console.log(relatedProduct , 're')
   
   const addItem = useCartStore((state) => state.addItem);
   const [selectedImage, setSelectedImage] = useState(0);

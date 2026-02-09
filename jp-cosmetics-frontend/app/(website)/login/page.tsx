@@ -187,6 +187,7 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleChange}
                     required
+                    min={6}
                     className="w-full pl-12 pr-12 py-3 border-2 border-gray-300 rounded-xl focus:border-pink-500 focus:outline-none transition-colors"
                     placeholder="Enter your password"
                   />
