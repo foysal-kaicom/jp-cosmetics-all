@@ -25,7 +25,7 @@ class CustomerAuthController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email|exists:customers,email',
+                'email' => 'required|email',
                 'password' => 'required|min:6',
             ]);
 
@@ -36,27 +36,7 @@ class CustomerAuthController extends Controller
                     422,
                 );
             }
-
-            // Fetch customer
-            $customer = Customer::where('email', $request->email)->first();
-
-            if (!$customer) {
-                return $this->responseWithError(
-                    'Invalid email or password',
-                    [],
-                    401,
-                );
-            }
-
-            // Check active status
-            if ($customer->status !== 'active') {
-                return $this->responseWithError(
-                    'Your account is not active. Please contact support.',
-                    [],
-                    403,
-                );
-            }
-
+        
             // Attempt login using JWT guard
             $credentials = $request->only('email', 'password');
 
@@ -65,6 +45,16 @@ class CustomerAuthController extends Controller
                     'Invalid email or password',
                     [],
                     401
+                );
+            }
+
+            $customer = Auth::guard('customer')->user();
+
+            if ($customer->status !== 'active') {
+                return $this->responseWithError(
+                    'Your account is not active. Please contact support.',
+                    [],
+                    403,
                 );
             }
 
