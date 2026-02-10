@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { showToast } from "@/utils/toast";
+
 import { profileService } from "@/services/user.service";
 
 import { Eye, EyeOff } from "lucide-react";
@@ -30,7 +32,7 @@ export default function PasswordModal({ isOpen, onClose }: Props) {
 
   const handleSubmit = async () => {
     if (form.new_password !== form.new_password_confirmation) {
-      alert("Passwords do not match");
+      showToast.error(`Password didnot match`);
       return;
     }
 
@@ -38,7 +40,7 @@ export default function PasswordModal({ isOpen, onClose }: Props) {
       await profileService.updatePassword(form);
       onClose();
     } catch (err) {
-      console.error("Password update failed", err);
+      showToast.error(`failed to update password`);
     }
   };
 

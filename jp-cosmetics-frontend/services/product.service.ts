@@ -32,12 +32,13 @@ export const getProductFilters = async (): Promise<ProductFilters> => {
 };
 
 
-export const getRelatedProduct = async (slug: string): Promise<ProductList> => {
+export const getRelatedProduct = async (slug: string): Promise<Product[]> => {
   try {
-    const response = await apiClient.get(`/related-products/${slug}`); 
+    const response = await apiClient.get(`/products/related-products/${slug}`);
     return response.data?.data;
   } catch (error) {
     console.error("Failed to fetch Related Products Info", error);
-    return {} as ProductList;
+
+    return {} as Product[];
   }
 };

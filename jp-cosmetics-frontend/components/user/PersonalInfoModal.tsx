@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { showToast } from "@/utils/toast";
+
 import { useAuthStore } from "@/store/authStore";
 import { profileService } from "@/services/user.service";
 
@@ -30,7 +32,7 @@ export default function PersonalInfoModal({ isOpen, onClose }: Props) {
       useAuthStore.getState().setUser(user);
       onClose();
     } catch (err) {
-      console.error("Profile update failed", err);
+      showToast.error(`failed to get profile data`);
     }
   };
 

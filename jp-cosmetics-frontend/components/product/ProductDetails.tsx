@@ -23,33 +23,34 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ProductCard from "@/components/home/ProductCard";
-import { SingleProduct,ProductList } from "@/types";
+import { SingleProduct, Product } from "@/types";
 import Image from "next/image";
 import { useCartStore } from "@/store/cart-store";
 import { showToast } from "@/utils/toast";
 
-
 interface responseProps {
-  product : SingleProduct,
-  relatedProduct: ProductList
+  product: SingleProduct;
+  relatedProduct: Product[];
 }
 
-const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
-  console.log(product);
-  console.log(relatedProduct , 're')
-  
+const ProductDetails = ({ product, relatedProduct }: responseProps) => {
+  // console.log(product);
+  // console.log(relatedProduct , 're')
+
   const addItem = useCartStore((state) => state.addItem);
   const [selectedImage, setSelectedImage] = useState(0);
   const [main_image, setMainImage] = useState(product.primary_image);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [default_attribute, setDefaultAttribute] = useState(
-    product.attributes[0]
+    product.attributes[0],
   );
   const imgRef = useRef<HTMLImageElement>(null);
   const [activeTab, setActiveTab] = useState<
     "description" | "ingredients" | "howto" | "reviews"
   >("description");
+
+  // const [relatedProduct , setRelatedProducts] = useState<RelatedProductList[]>([])
 
   const handleQuantityChange = (type: "increase" | "decrease") => {
     if (type === "increase") {
@@ -72,7 +73,7 @@ const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
   };
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    if(default_attribute.stock < quantity){
+    if (default_attribute.stock < quantity) {
       showToast.error("Requested quantity not available in stock.");
       return;
     }
@@ -89,6 +90,15 @@ const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
     });
     showToast.success("Product added to cart successfully!");
   };
+
+  const pageUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  const shareText = "Check out this product!";
+
+  const openShareWindow = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer,width=600,height=500");
+  };
+
   return (
     <div className="bg-white min-h-screen">
       {/* Breadcrumb */}
@@ -190,10 +200,31 @@ const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
 
               {/* Social Share */}
               <div className="flex items-center gap-3 pt-4">
-                <button className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors cursor-pointer">
+                {/* ✅ Facebook */}
+                <button
+                  onClick={() =>
+                    openShareWindow(
+                      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        pageUrl,
+                      )}`,
+                    )
+                  }
+                  className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors cursor-pointer"
+                >
                   <Facebook className="w-5 h-5" />
                 </button>
-                <button className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer">
+
+                {/* ✅ X (Twitter) */}
+                <button
+                  onClick={() =>
+                    openShareWindow(
+                      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                        pageUrl,
+                      )}&text=${encodeURIComponent(shareText)}`,
+                    )
+                  }
+                  className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
+                >
                   <svg
                     className="w-5 h-5"
                     fill="currentColor"
@@ -202,10 +233,32 @@ const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
                 </button>
-                <button className="w-10 h-10 rounded-full bg-blue-700 text-white flex items-center justify-center hover:bg-blue-800 transition-colors cursor-pointer">
+
+                {/* ✅ LinkedIn */}
+                <button
+                  onClick={() =>
+                    openShareWindow(
+                      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                        pageUrl,
+                      )}`,
+                    )
+                  }
+                  className="w-10 h-10 rounded-full bg-blue-700 text-white flex items-center justify-center hover:bg-blue-800 transition-colors cursor-pointer"
+                >
                   <Linkedin className="w-5 h-5" />
                 </button>
-                <button className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition-colors cursor-pointer">
+
+                {/* ✅ WhatsApp */}
+                <button
+                  onClick={() =>
+                    openShareWindow(
+                      `https://wa.me/?text=${encodeURIComponent(
+                        shareText + " " + pageUrl,
+                      )}`,
+                    )
+                  }
+                  className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition-colors cursor-pointer"
+                >
                   <MessageCircle className="w-5 h-5" />
                 </button>
               </div>
@@ -506,12 +559,17 @@ const ProductDetails = ({ product , relatedProduct }: responseProps ) => {
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* {relatedProducts.map((product, index) => (
-              <ProductCard key={index} product={product} wishlisted={false} />
-            ))} */}
-          </div>
+          {relatedProduct.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProduct?.map((product, index) => (
+                <ProductCard key={index} product={product} wishlisted={false} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center capitalize text-gray-500 text-sm font-medium">
+              no related products
+            </p>
+          )}
         </div>
       </div>
     </div>
